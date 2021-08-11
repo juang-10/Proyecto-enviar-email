@@ -1,6 +1,7 @@
 // Variables
 const btnEnviar = document.querySelector('#enviar');
 const formulario = document.querySelector('#enviar-mail')
+const resetBtn = document.querySelector('#resetBtn')
 
 // Variables para campos
 const email = document.querySelector('#email');
@@ -17,6 +18,9 @@ function eventListeners() {
     email.addEventListener('blur', validarFormulario);
     asunto.addEventListener('blur', validarFormulario);
     mensaje.addEventListener('blur', validarFormulario);
+
+    // Reiniciar formulario
+    resetBtn.addEventListener('click', resetearFormulario)
 
     // Enviar email
     formulario.addEventListener('submit', enviarEmail);
@@ -102,6 +106,17 @@ function enviarEmail(e){
 
         setTimeout(() => {
             parrafo.remove();
+            resetearFormulario();
         }, 5000);
     }, 3000);
+}
+
+
+// Función que resetea el formulario 
+
+function resetearFormulario(e) {
+    e.preventDefault();
+    formulario.reset();
+
+    iniciarApp();
 }
