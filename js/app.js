@@ -17,6 +17,9 @@ function eventListeners() {
     email.addEventListener('blur', validarFormulario);
     asunto.addEventListener('blur', validarFormulario);
     mensaje.addEventListener('blur', validarFormulario);
+
+    // Enviar email
+    formulario.addEventListener('submit', enviarEmail);
 }
 
 // Funciones 
@@ -59,9 +62,10 @@ function validarFormulario(e) {
     }
 
     if(email.value !== '' && asunto.value != '' && mensaje.value != '') {
-        console.log('Pasaste la validación');
+        btnEnviar.disabled = false;
+        btnEnviar.classList.remove('cursor-not-allowed', 'opacity-50')
     } else {
-        console.log('Faltan algunos campos');
+        iniciarApp();
     }
 }
 
@@ -74,4 +78,30 @@ function mostrarError(mensaje) {
     if (errores.length === 0) {
         formulario.appendChild(mensajeError);
     }
+}
+
+//Envia el email
+function enviarEmail(e){
+    e.preventDefault();
+    // Mostrar el spinner
+    const spinner = document.querySelector('#spinner');
+    spinner.style.display = 'flex';
+
+
+    // Después de 3 segundos ocultar el spinner y mostrar el mensaje
+    setTimeout(() => {
+        spinner.style.display = 'none';
+
+        // Mensaje que dice que se envió correctamente
+        const parrafo = document.createElement('p');
+        parrafo.textContent = 'El mensaje se envió correctamente';
+        parrafo.classList.add('text-center', 'my-10', 'p-2', 'bg-green-500', 'text-white', 'font-bold', 'uppercase')
+
+        // Inserta el parrafo antes del spinner
+        formulario.insertBefore(parrafo, spinner);
+
+        setTimeout(() => {
+            parrafo.remove();
+        }, 5000);
+    }, 3000);
 }
